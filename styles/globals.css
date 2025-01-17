@@ -72,18 +72,6 @@ body {
   50% { transform: translateY(-15vh) scale(1.1) rotate(360deg); }
 }
 
-@font-face {
-  font-family: 'Departure Mono';
-  src: url('/fonts/DepartureMono-Regular.woff2') format('woff2'),
-       url('/fonts/DepartureMono-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Import JetBrains Mono */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-
 /* Base styles */
 body {
   color: var(--foreground);
@@ -121,3 +109,23 @@ body {
   transition-duration: 300ms;
 }
 
+
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+@font-face {
+  font-family: 'Departure Mono';
+  src: url('/fonts/DepartureMono-Regular.woff2') format('woff2'),
+       url('/fonts/DepartureMono-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-departure {
+  font-family: 'Departure Mono', monospace !important;
+}
+
+.font-jetbrains {
+  font-family: 'JetBrains Mono', monospace !important;
+}

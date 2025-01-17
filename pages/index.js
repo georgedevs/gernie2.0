@@ -157,7 +157,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gray-900 text-white p-4 relative overflow-hidden font-jetbrains">
       {/* Background Love Messages */}
       <div className="absolute inset-0 opacity-5 overflow-hidden pointer-events-none">
         <div className="animate-slide">
@@ -170,7 +170,7 @@ const App = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-md mx-auto relative z-10 space-y-8">
+      <div className="max-w-md mx-auto relative z-10 space-y-8 font-departure">
         {/* Header with Glowing Effect */}
         <header className="text-center space-y-4">
           <div className="relative inline-block">
@@ -220,7 +220,7 @@ const App = () => {
         {/* Rest of the component remains the same */}
         {/* Voice Messages Section */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+          <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text font-departure">
             Listen to My Voice
           </h2>
           <div className="space-y-2">
@@ -247,7 +247,7 @@ const App = () => {
 
         {/* Daily Poems Section */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+          <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text font-departure">
             Daily Poems/ Mini Blog
           </h2>
           <div className="space-y-4">
