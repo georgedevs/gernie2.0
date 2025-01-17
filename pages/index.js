@@ -1,5 +1,237 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Heart, Music, Send, RefreshCw, Pause, Play, Volume2, Lock, LogOut } from 'lucide-react';
+import { Heart, Music, Send, RefreshCw, Pause, Play, Volume2, Lock, LogOut, Smile, Meh, Frown, Clock } from 'lucide-react';
+
+
+const loveReasons = [
+  "How you always make time for me evern when you are super busy",
+  "Your incredible strength dealing with the chicken pox - you're amazing!",
+  "How you always remember the little details about my day",
+  "The way you care so deeply about your family and friends",
+  "The way you make everyone around you feel special",
+  "Your beautiful smile that lights up my whole world",
+  "The way you support my goals and dreams",
+  "Your kind heart and how you always try to help others",
+  "The cute faces you make when you're concentrating and also when you are angry"
+];
+
+export const LoveCounter = () => {
+  const [currentReason, setCurrentReason] = useState('');
+  const [nextAvailable, setNextAvailable] = useState(null);
+  const [currentCount, setCurrentCount] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState('');
+
+  useEffect(() => {
+    const lastViewed = localStorage.getItem('lastReasonViewed');
+    const count = parseInt(localStorage.getItem('reasonCount') || '0');
+    const nextTime = localStorage.getItem('nextReasonAvailable');
+
+    setCurrentCount(count);
+    
+    if (nextTime) {
+      setNextAvailable(new Date(nextTime));
+    }
+
+    if (lastViewed) {
+      setCurrentReason(loveReasons[count - 1]);
+    }
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (nextAvailable) {
+        const now = new Date();
+        const diff = nextAvailable.getTime() - now.getTime();
+        
+        if (diff <= 0) {
+          setNextAvailable(null);
+          setTimeRemaining('');
+          return;
+        }
+
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        setTimeRemaining(
+          `${hours}h ${minutes}m ${seconds}s`
+        );
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [nextAvailable]);
+
+  const revealNewReason = () => {
+    if (nextAvailable && new Date() < nextAvailable) {
+      return;
+    }
+
+    const newCount = currentCount + 1;
+    const next = new Date();
+    next.setHours(next.getHours() + 24);
+
+    setCurrentCount(newCount);
+    setCurrentReason(loveReasons[newCount - 1]);
+    setNextAvailable(next);
+    
+    localStorage.setItem('reasonCount', newCount.toString());
+    localStorage.setItem('lastReasonViewed', new Date().toISOString());
+    localStorage.setItem('nextReasonAvailable', next.toISOString());
+  };
+
+  return (
+    <div className="space-y-4">
+      <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+        Why I Love You ({currentCount}/{loveReasons.length})
+      </h2>
+      
+      <button
+        onClick={revealNewReason}
+        disabled={nextAvailable && new Date() < nextAvailable}
+        className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+      >
+        {nextAvailable && new Date() < nextAvailable ? (
+          <div className="flex items-center gap-2">
+            <Clock className="w-5 h-5" />
+            <span>Next reason in: {timeRemaining}</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Heart className="w-5 h-5" />
+            <span>Reveal Today's Reason</span>
+          </div>
+        )}
+      </button>
+
+      {currentReason && (
+        <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-lg animate-fade-in text-center">
+          <p>{currentReason}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export const WellnessCheck = () => {
+  const [mood, setMood] = useState('');
+  const [isHugging, setIsHugging] = useState(false);
+
+  const moodMessages = {
+    happy: "Your happiness makes my whole day brighter! Keep shining, beautiful! 🌟",
+    sad: "I wish I could hold you right now. Remember, tough times don't last, but tough people like you do! That's why you are my girl 💕",
+    okay: "Sometimes 'okay' is perfectly fine. You're doing great, and I'm always here for you! 🤗"
+  };
+
+  const sendVirtualHug = () => {
+    setIsHugging(true);
+    setTimeout(() => setIsHugging(false), 3000);
+  };
+
+  return (
+    <div className="space-y-4">
+      <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+        How Are You Feeling?
+      </h2>
+
+      <div className="flex justify-between gap-2">
+        <button
+          onClick={() => setMood('happy')}
+          className={`flex-1 p-4 rounded-lg backdrop-blur-sm border transition-all duration-300 flex items-center justify-center gap-2 ${
+            mood === 'happy' ? 'bg-green-500/20 border-green-500' : 'bg-gray-800/50 border-gray-700 hover:border-green-500'
+          }`}
+        >
+          <Smile className="w-6 h-6" />
+        </button>
+        <button
+          onClick={() => setMood('okay')}
+          className={`flex-1 p-4 rounded-lg backdrop-blur-sm border transition-all duration-300 flex items-center justify-center gap-2 ${
+            mood === 'okay' ? 'bg-yellow-500/20 border-yellow-500' : 'bg-gray-800/50 border-gray-700 hover:border-yellow-500'
+          }`}
+        >
+          <Meh className="w-6 h-6" />
+        </button>
+        <button
+          onClick={() => setMood('sad')}
+          className={`flex-1 p-4 rounded-lg backdrop-blur-sm border transition-all duration-300 flex items-center justify-center gap-2 ${
+            mood === 'sad' ? 'bg-blue-500/20 border-blue-500' : 'bg-gray-800/50 border-gray-700 hover:border-blue-500'
+          }`}
+        >
+          <Frown className="w-6 h-6" />
+        </button>
+      </div>
+
+      {mood && (
+        <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-lg animate-fade-in text-center">
+          <p>{moodMessages[mood]}</p>
+          
+          <button
+            onClick={sendVirtualHug}
+            className="mt-4 px-6 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 hover:opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+          >
+            <Send className="w-4 h-4" />
+            <span>Send Virtual Hug</span>
+          </button>
+        </div>
+      )}
+
+      {isHugging && (
+        <div className="fixed inset-0 pointer-events-none flex items-center justify-center">
+          {/* Center burst of hearts */}
+          <div className="relative">
+            {/* Large central heart */}
+            <Heart className="w-32 h-32 text-pink-500 animate-ping" />
+            <Heart className="absolute inset-0 w-32 h-32 text-pink-500 animate-pulse" />
+            
+            {/* Orbiting hearts */}
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{
+                  animation: `orbit ${2}s linear infinite`,
+                  transformOrigin: 'center',
+                  transform: `rotate(${i * 45}deg) translateX(100px)`
+                }}
+              >
+                <Heart className="w-8 h-8 text-pink-500 animate-pulse" />
+              </div>
+            ))}
+            
+            {/* Expanding ring of hearts */}
+            {[...Array(12)].map((_, i) => (
+              <div
+                key={`ring-${i}`}
+                className="absolute left-1/2 top-1/2"
+                style={{
+                  transform: `rotate(${i * 30}deg)`,
+                }}
+              >
+                <Heart 
+                  className="w-6 h-6 text-pink-500 -translate-x-1/2 -translate-y-1/2"
+                  style={{
+                    animation: 'expand 1.5s ease-out infinite',
+                    animationDelay: `${i * 0.1}s`
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes orbit {
+          from { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+          to { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+        @keyframes expand {
+          0% { transform: translateY(0) scale(0); opacity: 1; }
+          100% { transform: translateY(-100px) scale(2); opacity: 0; }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 const AuthScreen = ({ onAuth }) => {
   const [password, setPassword] = useState('');
@@ -297,6 +529,11 @@ const App = () => {
           <p className="text-gray-400 animate-bounce">Get well soon, my love! 💖</p>
         </header>
 
+
+        <LoveCounter />
+  <WellnessCheck />
+  
+
         {/* Random Message Generator with Enhanced Animation */}
         <div className="space-y-4">
           <button
@@ -332,7 +569,6 @@ const App = () => {
           )}
         </div>
 
-        {/* Rest of the component remains the same */}
         {/* Voice Messages Section */}
         <div className="space-y-4">
           <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text font-departure">
