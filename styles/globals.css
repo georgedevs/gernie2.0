@@ -19,3 +19,105 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes slide {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+.animate-slide {
+  animation: slide 20s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  50% { transform: translateY(50vh) scale(1); opacity: 0.5; }
+  100% { transform: translateY(0) scale(0); opacity: 0; }
+}
+
+.animate-float-1 { animation: float 10s ease-in-out infinite; }
+.animate-float-2 { animation: float 12s ease-in-out infinite; }
+.animate-float-3 { animation: float 14s ease-in-out infinite; }
+.animate-float-4 { animation: float 16s ease-in-out infinite; }
+.animate-float-5 { animation: float 18s ease-in-out infinite; }
+.animate-float-6 { animation: float 20s ease-in-out infinite; }
+.animate-float-7 { animation: float 22s ease-in-out infinite; }
+.animate-float-8 { animation: float 24s ease-in-out infinite; }
+.animate-float-9 { animation: float 26s ease-in-out infinite; }
+.animate-float-10 { animation: float 28s ease-in-out infinite; }
+
+/* Add these new animations to your CSS */
+@keyframes slide-left {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-50%); }
+}
+
+@keyframes slide-right {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(50%) translateY(-50%); }
+}
+
+@keyframes float-large {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+  50% { transform: translateY(-30vh) scale(1.2) rotate(180deg); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+  50% { transform: translateY(-20vh) scale(0.8) rotate(-180deg); }
+}
+
+@keyframes float-small {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+  50% { transform: translateY(-15vh) scale(1.1) rotate(360deg); }
+}
+
+@font-face {
+  font-family: 'Departure Mono';
+  src: url('/fonts/DepartureMono-Regular.woff2') format('woff2'),
+       url('/fonts/DepartureMono-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Import JetBrains Mono */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* Base styles */
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+/* Font utility classes */
+.font-departure {
+  font-family: 'Departure Mono', monospace !important;
+}
+
+.font-jetbrains {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+.animate-slide-left {
+  animation: slide-left 20s linear infinite;
+}
+
+.animate-slide-right {
+  animation: slide-right 25s linear infinite;
+}
+
+/* Add these utility classes to your CSS */
+.backdrop-blur-lg {
+  backdrop-filter: blur(16px);
+}
+
+.hover\:backdrop-blur-xl:hover {
+  backdrop-filter: blur(24px);
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
