@@ -50,7 +50,7 @@ const dirtyMessages = [
 const poems = [
   {
     title: "A Special Message for My Love ❤️",
-    date: "January 17, 2025",
+    date: "January 18, 2025",
     content: "My precious baby,\n\nWelcome to this little corner of the internet I created just for you 🥰 I wanted to make something special that could bring a smile to your face whenever you're feeling lonely or when I'm not online. This is your safe space, filled with all my love for you.\n\nI know the chicken pox has been overwhelming, and seeing you go through this makes my heart ache. But I want you to know something - every spot, every mark, they don't change how beautiful you are to me. They're just temporary visitors, but my love for you is permanent.\n\nIt's Friday now, and as we approach the weekend, I wish I could hold you close. Even though we're apart, my heart is always with you. When you feel down, scroll through these messages, listen to my voice, and remember that you have me - completely and unconditionally.\n\nTake all the time you need to heal. Don't worry about anything else. Just focus on getting better, and know that I'm here, loving you more with each passing moment.\n\nForever yours,\nYour love 💕"
   }
 ];
