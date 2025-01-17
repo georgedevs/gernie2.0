@@ -1,5 +1,107 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Heart, Music, Send, RefreshCw, Pause, Play, Volume2 } from 'lucide-react';
+import { Heart, Music, Send, RefreshCw, Pause, Play, Volume2, Lock, LogOut } from 'lucide-react';
+
+const AuthScreen = ({ onAuth }) => {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    // Simulate a small delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 600));
+    
+    if (password === 'iloveyou') {
+      localStorage.setItem('isAuthenticated', 'true');
+      onAuth(true);
+    } else {
+      setError('Incorrect password');
+      setIsLoading(false);
+      setTimeout(() => setError(''), 3000);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          {Array(20).fill(null).map((_, i) => (
+            <Heart
+              key={i}
+              className="absolute text-pink-500 animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                fontSize: `${Math.random() * 30 + 10}px`,
+                animationDelay: `${Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+      </div>
+      
+      {/* Glass card container */}
+      <div className="max-w-md w-full backdrop-blur-lg bg-white/10 p-8 rounded-2xl shadow-2xl border border-white/20 space-y-8 relative">
+        <div className="text-center relative">
+          <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-full blur-lg opacity-70 animate-pulse"></div>
+              <Lock className="relative w-16 h-16 text-white bg-gray-900 p-4 rounded-full border-2 border-white/20" />
+            </div>
+          </div>
+          
+          <h2 className="mt-8 text-3xl font-bold">
+            <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-transparent bg-clip-text">
+              Welcome Back
+            </span>
+          </h2>
+          <p className="mt-2 text-gray-300">Enter the password to access our special space</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative">
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 bg-gray-800/50 border border-white/10 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 outline-none text-white placeholder-gray-400"
+              placeholder="Enter password"
+            />
+          </div>
+
+          {error && (
+            <div className="text-red-400 text-sm text-center bg-red-900/20 py-2 px-4 rounded-lg animate-shake">
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-3 px-4 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-lg font-medium text-white hover:opacity-90 transform transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed relative group overflow-hidden"
+          >
+            <span className={`flex items-center justify-center gap-2 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+              <Lock className="w-4 h-4" />
+              Enter
+            </span>
+            
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <RefreshCw className="w-5 h-5 animate-spin" />
+              </div>
+            )}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+
 
 const loveMessages = [
   "Every moment with you is a blessing, my Teniola 💕",
@@ -56,12 +158,20 @@ const poems = [
 ];
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
   const [currentDirtyMessage, setCurrentDirtyMessage] = useState("");
   const [isMessageAnimating, setIsMessageAnimating] = useState(false);
   const [isDirtyMessageAnimating, setIsDirtyMessageAnimating] = useState(false);
   const [isPlaying, setIsPlaying] = useState({});
   const audioRefs = useRef({});
+
+  useEffect(() => {
+    const auth = localStorage.getItem('isAuthenticated');
+    if (auth === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const audioFiles = [
     { id: 1, title: "Good Morning Beautiful", src: "/voice-notes/morning.mp3" },
@@ -156,8 +266,13 @@ const App = () => {
     };
   }, []);
 
+  
+  if (!isAuthenticated) {
+    return <AuthScreen onAuth={setIsAuthenticated} />;
+  }
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 relative overflow-hidden font-jetbrains">
+    <div className="min-h-screen bg-gray-900 text-white p-4 relative overflow-hidden font-jetbrains pb-20">
       {/* Background Love Messages */}
       <div className="absolute inset-0 opacity-5 overflow-hidden pointer-events-none">
         <div className="animate-slide">
@@ -267,6 +382,21 @@ const App = () => {
           </div>
         </div>
 
+
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-gray-900 via-gray-900/95 to-transparent">
+        <div className="max-w-md mx-auto">
+          <button
+            onClick={() => {
+              localStorage.removeItem('isAuthenticated');
+              setIsAuthenticated(false);
+            }}
+            className="w-full px-4 py-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-red-500 transition-all duration-300 flex items-center justify-center gap-2 group"
+          >
+            <LogOut className="w-4 h-4 text-red-500" />
+            <span className="text-sm">Logout</span>
+          </button>
+        </div>
+        </div>
         {/* Floating Hearts Animation */}
         <div className="fixed inset-0 pointer-events-none">
           {Array(10).fill(null).map((_, index) => (
@@ -279,6 +409,7 @@ const App = () => {
                 fontSize: `${Math.random() * 20 + 10}px`
               }}
             />
+            
           ))}
         </div>
       </div>
