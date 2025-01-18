@@ -153,7 +153,7 @@ export const WellnessCheck = () => {
         <button
           onClick={() => setMood('sad')}
           className={`flex-1 p-4 rounded-lg backdrop-blur-sm border transition-all duration-300 flex items-center justify-center gap-2 ${
-            mood === 'sad' ? 'bg-blue-500/20 border-blue-500' : 'bg-gray-800/50 border-gray-700 hover:border-blue-500'
+            mood === 'sad' ? 'bg-red-500/20 border-red-500' : 'bg-gray-800/50 border-gray-700 hover:border-blue-500'
           }`}
         >
           <Frown className="w-6 h-6" />
