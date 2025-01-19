@@ -98,7 +98,7 @@ export const LoveCounter = () => {
         ) : (
           <div className="flex items-center gap-2">
             <Heart className="w-5 h-5" />
-            <span>Reveal Today's Reason</span>
+            <span>Reveal Today&apos;s Reason</span>
           </div>
         )}
       </button>
@@ -382,11 +382,17 @@ const dirtyMessages = [
 ];
 
 const poems = [
+
   {
-    title: "A Special Message for My Love ❤️",
-    date: "January 18, 2025",
-    content: "My precious baby,\n\nWelcome to this little corner of the internet I created just for you 🥰 I wanted to make something special that could bring a smile to your face whenever you're feeling lonely or when I'm not online. This is your safe space, filled with all my love for you.\n\nI know the chicken pox has been overwhelming, and seeing you go through this makes my heart ache. But I want you to know something - every spot, every mark, they don't change how beautiful you are to me. They're just temporary visitors, but my love for you is permanent.\n\nIt's Friday now, and as we approach the weekend, I wish I could hold you close. Even though we're apart, my heart is always with you. When you feel down, scroll through these messages, listen to my voice, and remember that you have me - completely and unconditionally.\n\nTake all the time you need to heal. Don't worry about anything else. Just focus on getting better, and know that I'm here, loving you more with each passing moment.\n\nForever yours,\nYour love 💕"
+    title: "Sundays, Worries, and Endless Love 💝",
+    date: "January 19, 2025",
+    content: "Good morning my precious baby,\n\nWelcome to our safe space - this little corner I've created just for us 🤗\n\nI know we've been feeling a bit DISTANT lately, and I want you to apologize for that. But more importantly, I want you to know something: I'm okay, truly. Your worried heart can rest.\n\nWhat's really filling my thoughts is you - how you're feeling, how you're coping. I know this isn't easy, dealing with everything. But I want you to know that I'm here for you , every single day.\n\nIt's Sunday, and you won't be at church (not for a reason you'd choose, but hey, it's a silver lining innit 😂), I wanted to share my plans for after church today... absolutely nothing! And you know what? I think that's perfectly okay,I saw something I totally fucked with today 'Sometimes the best plan is no plan at all'.\n\nPeople keep telling me how well I'm doing, but honestly? I can't see it myself. Maybe that's just how it is sometimes - we're our own toughest critics.\n\nI love you so much, baby. I miss you more than words can say. And yes, I worry about you - about how you're really feeling, about everything you're going through.\n\nRest well today, my love. I hope this is Sunday a good one, even if we're apart.\n\nWith all my love and worry (because that's just how much I care),\nYour love 💕"
   }
+  // {
+  //   title: "A Special Message for My Love ❤️",
+  //   date: "January 18, 2025",
+  //   content: "My precious baby,\n\nWelcome to this little corner of the internet I created just for you 🥰 I wanted to make something special that could bring a smile to your face whenever you're feeling lonely or when I'm not online. This is your safe space, filled with all my love for you.\n\nI know the chicken pox has been overwhelming, and seeing you go through this makes my heart ache. But I want you to know something - every spot, every mark, they don't change how beautiful you are to me. They're just temporary visitors, but my love for you is permanent.\n\nIt's Friday now, and as we approach the weekend, I wish I could hold you close. Even though we're apart, my heart is always with you. When you feel down, scroll through these messages, listen to my voice, and remember that you have me - completely and unconditionally.\n\nTake all the time you need to heal. Don't worry about anything else. Just focus on getting better, and know that I'm here, loving you more with each passing moment.\n\nForever yours,\nYour love 💕"
+  // }
 ];
 
 const App = () => {
