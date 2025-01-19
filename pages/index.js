@@ -3,12 +3,12 @@ import { Heart, Music, Send, RefreshCw, Pause, Play, Volume2, Lock, LogOut, Smil
 
 
 const loveReasons = [
+  "Your beautiful smile that lights up my whole world",
   "How you always make time for me evern when you are super busy",
   "Your incredible strength dealing with the chicken pox - you're amazing!",
   "How you always remember the little details about my day",
   "The way you care so deeply about your family and friends",
   "The way you make everyone around you feel special",
-  "Your beautiful smile that lights up my whole world",
   "The way you support my goals and dreams",
   "Your kind heart and how you always try to help others",
   "The cute faces you make when you're concentrating and also when you are angry"
