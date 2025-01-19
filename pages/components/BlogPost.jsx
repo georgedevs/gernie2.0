@@ -11,13 +11,21 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/firebase';
 
+// Add prop type checking
 const BlogPost = ({ poem }) => {
+  // Guard clause for when poem is undefined
+  if (!poem) {
+    return null;
+  }
+
   const [reply, setReply] = useState('');
   const [replies, setReplies] = useState([]);
   const [showReplyBox, setShowReplyBox] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (!poem.date) return; // Guard against undefined date
+
     const repliesQuery = query(
       collection(db, 'replies'),
       where('poemDate', '==', poem.date),
@@ -40,7 +48,7 @@ const BlogPost = ({ poem }) => {
 
   const handleSubmitReply = async (e) => {
     e.preventDefault();
-    if (!reply.trim()) return;
+    if (!reply.trim() || !poem.date) return;
 
     setIsLoading(true);
     try {
@@ -58,7 +66,6 @@ const BlogPost = ({ poem }) => {
   };
 
   const handleReplyClick = () => {
-    console.log('Reply button clicked');
     setShowReplyBox(!showReplyBox);
   };
 
@@ -71,12 +78,11 @@ const BlogPost = ({ poem }) => {
         <p className="whitespace-pre-line">{poem.content}</p>
       </div>
 
-      {/* Glowing effect (behind the content) */}
+      {/* Glowing effect */}
       <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-lg opacity-0 group-hover:opacity-25 blur transition-opacity -z-10"></div>
 
       {/* Reply section */}
       <div className="relative z-10 mt-4">
-        {/* Reply Button */}
         <button
           onClick={handleReplyClick}
           className="flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 transition-colors p-2 rounded-lg hover:bg-gray-700/30"
@@ -85,10 +91,8 @@ const BlogPost = ({ poem }) => {
           {replies.length > 0 ? `${replies.length} ${replies.length === 1 ? 'Reply' : 'Replies'}` : 'Reply'}
         </button>
 
-        {/* Replies Section */}
         {showReplyBox && (
           <div className="space-y-4 mt-4">
-            {/* Reply Form */}
             <form onSubmit={handleSubmitReply} className="space-y-2">
               <textarea
                 value={reply}
@@ -113,7 +117,6 @@ const BlogPost = ({ poem }) => {
               </button>
             </form>
 
-            {/* Existing Replies */}
             <div className="space-y-3">
               {replies.map((existingReply) => (
                 <div
@@ -132,6 +135,11 @@ const BlogPost = ({ poem }) => {
       </div>
     </div>
   );
+};
+
+// Prevent the component from being rendered as a standalone page
+BlogPost.getInitialProps = () => {
+  return { props: {} };
 };
 
 export default BlogPost;
