@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Heart, Music, Send, RefreshCw, Pause, Play, Volume2, Lock, LogOut, Smile, Meh, Frown, Clock } from 'lucide-react';
+import BlogPost from './components/BlogPost';
+import VoiceMessages from './components/VoiceMessages';
+import LoveNotes from './components/LoveNotes';
+import ViewOnceMedia from './components/ViewOnceMedia';
+
 
 
 const loveReasons = [
@@ -242,11 +247,15 @@ const AuthScreen = ({ onAuth }) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate a small delay for better UX
     await new Promise(resolve => setTimeout(resolve, 600));
     
-    if (password === 'iloveyou') {
+    if (password === 'iloveme') {
       localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('sender', 'Him'); // set him as sender
+      onAuth(true);
+    } else if (password === 'iloveyou') { 
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('sender', 'Teni'); // Set her as sender
       onAuth(true);
     } else {
       setError('Incorrect password');
@@ -397,10 +406,6 @@ const poems = [
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentMessage, setCurrentMessage] = useState("");
-  const [currentDirtyMessage, setCurrentDirtyMessage] = useState("");
-  const [isMessageAnimating, setIsMessageAnimating] = useState(false);
-  const [isDirtyMessageAnimating, setIsDirtyMessageAnimating] = useState(false);
   const [isPlaying, setIsPlaying] = useState({});
   const audioRefs = useRef({});
 
@@ -444,19 +449,6 @@ const App = () => {
     };
   }, []);
 
-  const generateRandomMessage = () => {
-    setIsMessageAnimating(true);
-    const randomIndex = Math.floor(Math.random() * loveMessages.length);
-    setCurrentMessage(loveMessages[randomIndex]);
-    setTimeout(() => setIsMessageAnimating(false), 500);
-  };
-
-  const generateRandomDirtyMessage = () => {
-    setIsDirtyMessageAnimating(true);
-    const randomIndex = Math.floor(Math.random() * dirtyMessages.length);
-    setCurrentDirtyMessage(dirtyMessages[randomIndex]);
-    setTimeout(() => setIsDirtyMessageAnimating(false), 500);
-  };
 
   const handlePlay = (id) => {
     // Pause all other playing audio
@@ -535,93 +527,28 @@ const App = () => {
           <p className="text-gray-400 animate-bounce">Get well soon, my love! 💖</p>
         </header>
 
-
+          <ViewOnceMedia/>
         <LoveCounter />
   <WellnessCheck />
   
 
-        {/* Random Message Generator with Enhanced Animation */}
-        <div className="space-y-4">
-          <button
-            onClick={generateRandomMessage}
-            className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl relative group"
-          >
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-lg opacity-25 group-hover:opacity-50 blur transition-opacity"></div>
-            <RefreshCw className={`w-5 h-5 relative ${isMessageAnimating ? 'animate-spin' : ''}`} />
-            <span className="relative">View a note</span>
-          </button>
-          {currentMessage && (
-            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-lg animate-fade-in text-center relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-lg opacity-0 group-hover:opacity-25 blur transition-opacity"></div>
-              <p className="relative">{currentMessage}</p>
-            </div>
-          )}
+        {/* Random Message Generator  */}
+          <LoveNotes 
+            hisNotes={loveMessages}
+            hasDirtyNotes={dirtyMessages}
+          />
 
-          {/* Dirty Messages Section */}
-          <button
-            onClick={generateRandomDirtyMessage}
-            className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-pink-500 via-red-500 to-purple-500 hover:opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl relative group"
-          >
-            <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-red-500 to-purple-500 rounded-lg opacity-25 group-hover:opacity-50 blur transition-opacity"></div>
-            <RefreshCw className={`w-5 h-5 relative ${isDirtyMessageAnimating ? 'animate-spin' : ''}`} />
-            <span className="relative">View a dirty note</span>
-          </button>
-          <p className="text-center text-gray-400 text-sm">(😅 why not)</p>
-          {currentDirtyMessage && (
-            <div className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 shadow-lg animate-fade-in text-center relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-red-500 to-purple-500 rounded-lg opacity-0 group-hover:opacity-25 blur transition-opacity"></div>
-              <p className="relative">{currentDirtyMessage}</p>
-            </div>
-          )}
-        </div>
-
-        {/* Voice Messages Section */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text font-departure">
-            Listen to My Voice
-          </h2>
-          <div className="space-y-2">
-            {audioFiles.map((audio) => (
-              <button
-                key={audio.id}
-                onClick={() => handlePlay(audio.id)}
-                className="w-full p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-purple-500 transition-all duration-300 flex items-center justify-between gap-3 group relative"
-              >
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-lg opacity-0 group-hover:opacity-25 blur transition-opacity"></div>
-                <div className="flex items-center gap-3 relative">
-                  {isPlaying[audio.id] ? (
-                    <Pause className="w-5 h-5 text-purple-500" />
-                  ) : (
-                    <Play className="w-5 h-5 text-purple-500" />
-                  )}
-                  <span>{audio.title}</span>
-                </div>
-                <Volume2 className={`w-5 h-5 ${isPlaying[audio.id] ? 'text-purple-500 animate-pulse' : 'text-gray-500'}`} />
-              </button>
-            ))}
-          </div>
-        </div>
-
+       <VoiceMessages/>
         {/* Daily Poems Section */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text font-departure">
-            Daily Poems/ Mini Blog
-          </h2>
-          <div className="space-y-4">
-            {poems.map((poem, index) => (
-              <div
-                key={index}
-                className="p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-purple-500 transition-all duration-300 relative group"
-              >
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-lg opacity-0 group-hover:opacity-25 blur transition-opacity"></div>
-                <div className="relative">
-                  <h3 className="font-semibold text-lg text-purple-400">{poem.title}</h3>
-                  <p className="text-sm text-gray-400 mb-2">{poem.date}</p>
-                  <p className="whitespace-pre-line">{poem.content}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+  <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text font-departure">
+    Daily Poems/ Mini Blog
+  </h2>
+  <div className="space-y-4">
+    {poems.map((poem, index) => (
+      <BlogPost key={index} poem={poem} />
+    ))}
+</div>
         </div>
 
 
