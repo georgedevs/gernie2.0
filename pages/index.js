@@ -392,11 +392,16 @@ const dirtyMessages = [
 
 const poems = [
 
-  {
-    title: "Sundays, Worries, and Endless Love 💝",
-    date: "January 19, 2025",
-    content: "Good morning my precious baby,\n\nWelcome to our safe space - this little corner I've created just for us 🤗\n\nI know we've been feeling a bit DISTANT lately, and I want you to apologize for that. But more importantly, I want you to know something: I'm okay, truly. Your worried heart can rest.\n\nWhat's really filling my thoughts is you - how you're feeling, how you're coping. I know this isn't easy, dealing with everything. But I want you to know that I'm here for you , every single day.\n\nIt's Sunday, and you won't be at church (not for a reason you'd choose, but hey, it's a silver lining innit 😂), I wanted to share my plans for after church today... absolutely nothing! And you know what? I think that's perfectly okay,I saw something I totally fucked with today 'Sometimes the best plan is no plan at all'.\n\nPeople keep telling me how well I'm doing, but honestly? I can't see it myself. Maybe that's just how it is sometimes - we're our own toughest critics.\n\nI love you so much, baby. I miss you more than words can say. And yes, I worry about you - about how you're really feeling, about everything you're going through.\n\nRest well today, my love. I hope this is Sunday a good one, even if we're apart.\n\nWith all my love and worry (because that's just how much I care),\nYour love 💕"
-  }
+    {
+    "title": "Back and Running Successfully 😙",
+    "date": "January 31, 2025",
+    "content": "My Precious Teniola, My Baby Girl\n\nFinally, it's done! The website is up and running again, and I couldn't be more excited to share this special space with you. These past few days of maintenance have felt like an eternity, and I've missed being able to connect with you here.\n\nThe distance between us feels so much longer these days. I miss you more than words can truly express - it's a feeling that goes beyond language, beyond explanation. Every moment we're apart, I find myself thinking of you, longing to be close to you, dreaming of my arms around you, imagining seeing your beautiful face with that cute smile of yours.\n\nI want you to know that this is just the beginning. Once my exams are over, I promise to pour my heart into making this website something truly special - a digital sanctuary of our love, our memories, and our connection. It will be a place that reflects every bit of how much you mean to me.\n\nI hope you had a wonderful day at school today. Even in our time apart, my love for you never wavers - it grows stronger with each passing moment.\n\nForever yours, Georgeeeeeeeee\n💕"
+    }
+  // {
+  //   title: "Sundays, Worries, and Endless Love 💝",
+  //   date: "January 19, 2025",
+  //   content: "Good morning my precious baby,\n\nWelcome to our safe space - this little corner I've created just for us 🤗\n\nI know we've been feeling a bit DISTANT lately, and I want you to apologize for that. But more importantly, I want you to know something: I'm okay, truly. Your worried heart can rest.\n\nWhat's really filling my thoughts is you - how you're feeling, how you're coping. I know this isn't easy, dealing with everything. But I want you to know that I'm here for you , every single day.\n\nIt's Sunday, and you won't be at church (not for a reason you'd choose, but hey, it's a silver lining innit 😂), I wanted to share my plans for after church today... absolutely nothing! And you know what? I think that's perfectly okay,I saw something I totally fucked with today 'Sometimes the best plan is no plan at all'.\n\nPeople keep telling me how well I'm doing, but honestly? I can't see it myself. Maybe that's just how it is sometimes - we're our own toughest critics.\n\nI love you so much, baby. I miss you more than words can say. And yes, I worry about you - about how you're really feeling, about everything you're going through.\n\nRest well today, my love. I hope this is Sunday a good one, even if we're apart.\n\nWith all my love and worry (because that's just how much I care),\nYour love 💕"
+  // }
   // {
   //   title: "A Special Message for My Love ❤️",
   //   date: "January 18, 2025",
